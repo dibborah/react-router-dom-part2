@@ -17,6 +17,8 @@ import {
 import RootLayout from "./layout/RootLayout";
 import RequireAuth from "./components/RequireAuth";
 import AuthProvider from "./contexts/AuthProvider";
+import { loader as fetchPosts } from "./pages/Posts";
+import { loader as fetchPost } from "./pages/PostDetails";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -27,6 +29,7 @@ const App = () => {
 
         <Route
           path="posts"
+          loader={fetchPosts}
           element={
             <RequireAuth>
               <Posts />
@@ -34,6 +37,7 @@ const App = () => {
           }
         />
         <Route
+        loader={fetchPost}
           path="posts/:id"
           element={
             <RequireAuth>

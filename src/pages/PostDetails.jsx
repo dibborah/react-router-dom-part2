@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+
+export async function loader({ params }) {
+  const { id } = params;
+  const url = "https://jsonplaceholder.typicode.com/posts";
+  const response = await fetch(`${url}/${id}`);
+  const data = await response.json();
+  return data;
+}
 
 const PostDetails = () => {
-  const [post, setPost] = useState(null);
-  const { id } = useParams();
-  const url = "https://jsonplaceholder.typicode.com/posts";
-  const fetchPost = async () => {
-    const response = await fetch(`${url}/${id}`);
-    const data = await response.json();
-    setPost(data);
-  };
-
-  useEffect(() => {
-    // fetching single post
-    fetchPost();
-  }, []);
+  const post = useLoaderData();
 
   return (
     <div>

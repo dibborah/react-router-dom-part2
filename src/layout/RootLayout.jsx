@@ -1,9 +1,10 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigation } from "react-router-dom";
 import styles from "./RootLayout.module.css";
 import { useAuth } from "../contexts/AuthProvider";
 
 const RootLayout = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const navigation = useNavigation(); // Parent gives better loading state of the child // Test and know it better
   return (
     <div>
       <h1>Nav</h1>
@@ -35,7 +36,7 @@ const RootLayout = () => {
           </li>
           <li>
             <NavLink
-              to={"posts"}
+              to={"posts"} // Parent gives better loading state or fetching state of the child component// Just test and know it
               className={({ isActive }) => (isActive ? styles.activeNav : null)}
             >
               Posts
@@ -54,12 +55,14 @@ const RootLayout = () => {
             </li>
           )}
         </ul>
+        {isLoggedIn && (
+          <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+        )}
       </nav>
-      {isLoggedIn && (
-        <button onClick={() => setIsLoggedIn(false)}>Logout</button>
-      )}
-      <hr />
-      <Outlet />
+      <main>
+        <hr />
+        {navigation.state === "loading" ? <h1>Loading ... </h1> : <Outlet />}
+      </main>
     </div>
   );
 };

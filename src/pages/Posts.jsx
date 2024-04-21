@@ -1,5 +1,5 @@
 import Post from "../components/Post";
-import { useLoaderData, redirect, useSearchParams } from "react-router-dom";
+import { useLoaderData, redirect, useSearchParams, useNavigation } from "react-router-dom";
 
 // New Things which we are going to learn
 
@@ -47,6 +47,7 @@ const Posts = () => {
 
   return (
     <div>
+    <h1>Posts</h1>
       {posts &&
         posts.map((post) => {
           return <Post key={post.id} {...post} />;

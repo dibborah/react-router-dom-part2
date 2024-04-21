@@ -26,6 +26,7 @@ const PostDetails = () => {
 
   return (
     <div>
+    <h1>Single Post</h1>
       {post && (
         <div>
           <h2>{post.title}</h2>

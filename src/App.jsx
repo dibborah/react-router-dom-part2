@@ -15,12 +15,12 @@ import {
   Login,
 } from "./pages";
 import RootLayout from "./layout/RootLayout";
-import RequireAuth from "./components/RequireAuth";
-import AuthProvider from "./contexts/AuthProvider";
 import { loader as fetchPosts } from "./pages/Posts";
 import { loader as fetchPost } from "./pages/PostDetails";
+import { useAuth } from "./contexts/AuthProvider";
 
 const App = () => {
+  const { isLoggedIn } = useAuth();
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route
@@ -33,23 +33,17 @@ const App = () => {
 
         <Route
           path="posts"
-          loader={fetchPosts}
+          loader={(args) => {
+            return fetchPosts(args, { isLoggedIn: isLoggedIn });
+          }}
           errorElement={<ErrorPage />}
-          element={
-            <RequireAuth>
-              <Posts />
-            </RequireAuth>
-          }
+          element={<Posts />}
         />
         <Route
           errorElement={<ErrorPage />}
-          loader={fetchPost}
+          loader={(args) => fetchPost(args, { isLoggedIn })}
           path="posts/:id"
-          element={
-            <RequireAuth>
-              <PostDetails />
-            </RequireAuth>
-          }
+          element={<PostDetails />}
         />
 
         <Route path="contact" element={<Contact />} />
@@ -58,11 +52,7 @@ const App = () => {
       </Route>
     )
   );
-  return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

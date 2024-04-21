@@ -9,6 +9,7 @@ const RequireAuth = ({ children }) => {
   if (isLoggedIn) {
     return children;
   }
+
   // When passing props : just writing the prop or property name make the value of
   // the property to be true implicitly
 
@@ -17,8 +18,6 @@ const RequireAuth = ({ children }) => {
   return (
     <div>
       <Navigate
-        to={"/login"}
-        replace={true}
         state={{ previousPath: location.pathname }}
       />
     </div>

@@ -1,11 +1,20 @@
-import { useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData } from "react-router-dom";
 
-const url = "https://jsonplaceholder.typicode.com/posts";
-export const loader = async ({ params }) => {
-  const { id } = params;
-  const response = await fetch(`${url}/${id}`);
-  if(!response.ok){
-    throw new Error("Something went wrong in Single Post")
+const endpoint = "https://jsonplaceholder.typicode.com/posts";
+export const loader = async (args, { isLoggedIn }) => {
+  const { id } = args.params;
+
+  const url = args.request.url;
+
+  const pathnameSinglePost = new URL(url);
+  console.log(pathnameSinglePost.pathname);
+
+  if (!isLoggedIn) {
+    return redirect("/login");
+  }
+  const response = await fetch(`${endpoint}/${id}`);
+  if (!response.ok) {
+    throw new Error("Something went wrong in Single Post");
   }
   const data = await response.json();
   return data;

@@ -23,13 +23,18 @@ import { loader as fetchPost } from "./pages/PostDetails";
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<RootLayout />}>
+      <Route
+        path="/"
+        element={<RootLayout />}
+        errorElement={<h1>Something Went Wrong</h1>}
+      >
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
 
         <Route
           path="posts"
           loader={fetchPosts}
+          errorElement={<ErrorPage />}
           element={
             <RequireAuth>
               <Posts />
@@ -37,7 +42,8 @@ const App = () => {
           }
         />
         <Route
-        loader={fetchPost}
+          errorElement={<ErrorPage />}
+          loader={fetchPost}
           path="posts/:id"
           element={
             <RequireAuth>

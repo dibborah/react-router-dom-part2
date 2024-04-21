@@ -1,12 +1,15 @@
 import { useLoaderData } from "react-router-dom";
 
-export async function loader({ params }) {
+const url = "https://jsonplaceholder.typicode.com/posts";
+export const loader = async ({ params }) => {
   const { id } = params;
-  const url = "https://jsonplaceholder.typicode.com/posts";
   const response = await fetch(`${url}/${id}`);
+  if(!response.ok){
+    throw new Error("Something went wrong in Single Post")
+  }
   const data = await response.json();
   return data;
-}
+};
 
 const PostDetails = () => {
   const post = useLoaderData();

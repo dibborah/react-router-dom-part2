@@ -15,6 +15,9 @@ import { useLoaderData } from "react-router-dom";
 const url = "https://jsonplaceholder.typicode.com/posts";
 export const loader = async () => {
   const response = await fetch(url);
+  if(!response.ok){
+    throw new Error("Something went Wrong in All Posts")
+  }
   const data = await response.json();
   return data;
 };

@@ -8,15 +8,14 @@ const Login = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // search parameters are accessed via created a new Object
-
+  // #Note: search parameters are accessed via created a new Object
   // const location = useLocation();
   // const searchParams = new URLSearchParams(location.search);
   // const redirectPath = searchParams.get("redirectTo");
 
   const previousPath = searchParams.get("redirectTo") || "/";
 
-  // console.log('previousPath', previousPath)
+  console.log('previousPath', previousPath)
 
   const navigate = useNavigate();
 

@@ -7,10 +7,11 @@ export const loader = async (args, { isLoggedIn }) => {
   const url = args.request.url;
 
   const pathnameSinglePost = new URL(url);
-  console.log(pathnameSinglePost.pathname);
+
+  const pathname = pathnameSinglePost.pathname;
 
   if (!isLoggedIn) {
-    return redirect("/login");
+    return redirect(`/login?redirectTo=${pathname}`);
   }
   const response = await fetch(`${endpoint}/${id}`);
   if (!response.ok) {

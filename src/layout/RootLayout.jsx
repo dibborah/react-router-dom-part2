@@ -11,13 +11,6 @@ const RootLayout = () => {
         <ul>
           <li>
             <NavLink
-              to={"/login"}
-            >
-              Login
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to={"/"}
               className={({ isActive }) => (isActive ? styles.activeNav : null)}
             >

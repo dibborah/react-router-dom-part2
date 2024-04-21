@@ -15,8 +15,6 @@ const Login = () => {
 
   const previousPath = searchParams.get("redirectTo") || "/";
 
-  console.log('previousPath', previousPath)
-
   const navigate = useNavigate();
 
   useEffect(() => {
